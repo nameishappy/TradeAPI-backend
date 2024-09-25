@@ -2,6 +2,7 @@ import express from "express";
 import { connectToDB } from "./db.js";
 import dotenv from "dotenv";
 import multer from "multer";
+import path from "path";
 import fileRouter from "./routes/fileRouter.js";
 dotenv.config();
 const app = express();
