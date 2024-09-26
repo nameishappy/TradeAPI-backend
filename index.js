@@ -1,7 +1,7 @@
 import express from "express";
 import { connectToDB } from "./db.js";
 import dotenv from "dotenv";
-
+import path from "path";
 import tradeRouter from "./routes/trade.route.js";
 dotenv.config();
 const app = express();
@@ -10,6 +10,7 @@ const PORT = process.env.PORT;
 
 connectToDB();
 app.use(express.json());
+app.use(express.static(path.resolve("./public")));
 
 app.use("/api/v1/trades", tradeRouter);
 
