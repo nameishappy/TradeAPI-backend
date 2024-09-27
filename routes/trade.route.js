@@ -8,9 +8,14 @@ import {
   handleFileUpload,
 } from "../controllers/trade.controller.js";
 
+const UPLOADS_DIR = path.join(__dirname, "../uploads");
+if (!fs.existsSync(UPLOADS_DIR)) {
+  fs.mkdirSync(UPLOADS_DIR);
+}
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, path.resolve("uploads/"));
+    cb(null, UPLOADS_DIR);
   },
   filename: function (req, file, cb) {
     const ext = path.extname(file.originalname);
