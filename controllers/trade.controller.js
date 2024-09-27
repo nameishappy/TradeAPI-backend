@@ -6,6 +6,13 @@ export const handleFileUpload = async (req, res) => {
   const results = [];
 
   console.log(req.file);
+  if (!req.file) {
+    res.status(400).send({
+      status: "error",
+      response: "No file uploaded.",
+    });
+    return;
+  }
   fs.createReadStream(req.file.path)
     .pipe(csv())
     .on("data", (data) => {
@@ -38,7 +45,10 @@ export const handleFileUpload = async (req, res) => {
 export const fetchBalance = async (req, res) => {
   try {
     const { timestamp } = req.body;
-    console.log(req.body);
+    if (!timestamp) {
+      res.status(400).json({ error: "Timestamp is required" });
+      return;
+    }
     const givenTime = new Date(timestamp);
     const trades = await Order.find({ UTC_Time: { $lte: givenTime } });
     const assetBalances = {};
